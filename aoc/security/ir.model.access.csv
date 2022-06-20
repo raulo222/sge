@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+cursos_manager, Cursos Manager,model_aoc_cursos,aoc_manager,1,1,1,1
+cursos_users, Cursos User,model_aoc_cursos,aoc_user,1,0,0,0
+sessions_manager,Sessions Manager,model_aoc_sesions,aoc_manager,1,1,1,1
+sessions_users,Sessions Usuari,model_aoc_sesions,aoc_user,1,0,0,0

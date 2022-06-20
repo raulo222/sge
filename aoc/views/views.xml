@@ -1,0 +1,208 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="aoc.sesions_tree">
+        <field name="name">aoc.sesions.tree</field>
+        <field name="model">aoc.sesions</field>
+        <field name="arch" type="xml">
+          <tree decoration-info="duracio&lt;5" decoration-danger="duracio&gt;15">
+            <field name="nom" />
+            <field name="fecha" />
+            <field name="fechaf" />
+            <field name="duracio" invisible="1" />
+            <field name="asistents" />
+            <field name="instructor" />
+            <field name="cursos" />
+            <field name="assistents" />
+            <field name="percen" />
+            <field name="activitat"/>
+            <field name="hores" />
+          </tree>
+        </field>
+      </record>
+    <record model="ir.ui.view" id="aoc.cursos_tree">
+        <field name="name">aoc.cursos.tree</field>
+        <field name="model">aoc.cursos</field>
+        <field name="arch" type="xml">
+          <tree>
+            <field name="nom" />
+            <field name="descripcio" />
+            <field name="sesions" />
+          </tree>
+        </field>
+      </record> 
+    <record model="ir.ui.view"  id="aoc.sesions_form">
+          <field name="name">aoc.sesions.form</field>
+          <field name="model">aoc.sesions</field>
+          <field name="arch" type="xml">
+              <form>
+                  <group colspan="2" col="2">
+                      <field name="nom" />
+                      <field name="fecha" />
+                      <field name="fechaf" />
+                      <field name="duracio" />
+                      <field name="asistents" />
+                      <field name="instructor" />
+                      <field name="cursos" />
+                      <field name="assistents" />
+                      <field name="percen" />
+                      <field name="activitat"/>
+                      <field name="hores" />
+                    </group>
+                </form>
+            </field>
+      </record>     
+      <record model="ir.ui.view"  id="aoc.cursos_form">
+          <field name="name">aoc.cursos.form</field>
+          <field name="model">aoc.cursos</field>
+          <field name="arch" type="xml">
+              <form>
+                  <group colspan="2" col="2">
+                      <field name="nom" />
+                      <field name="descripcio" />
+                      <field name="sesions" />
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view"  id="aoc.instructorform">
+          <field name="name">aoc.instructor.form</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form"/>
+          <field name="arch" type="xml">
+            <notebook position='inside'>
+              <page string='Instructor'>
+                    <group>
+                      <field name="sesion_ids" />
+                     <field name="instructor" />
+                    </group>
+              </page>
+            </notebook>
+          </field>
+        </record>
+    <record model="ir.ui.view" id="session_calendar_view">
+        <field name="name">sesion.calendar</field>
+        <field name="model">aoc.sesions</field>
+        <field name="arch" type="xml">
+            <calendar string="calendari" date_start="fecha" date_stop="fechaf" color="instructor">
+                <field name="nom"/>
+            </calendar>
+        </field>
+      </record>
+      <record model="ir.ui.view" id="wizard_form_view">
+        <field name="name">wizard.form</field>
+        <field name="model">aoc.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Afegir asistents">
+                <group>
+                    <field name="Sessio"/>
+                    <field name="asis"/>
+                </group>
+                <footer>
+                  <button name="subscribe" type="object" string="Subscribe" class="oe_highlight"/>
+                  <button special="cancel" string="Cancel"/>
+              </footer>
+            </form>
+        </field>
+      </record>
+      <act_window id="launchwizard" name="Afegir asistents" binding_model="aoc.sesions" res_model="aoc.wizard" view_mode="form" target="new"/>
+      <record model='ir.actions.act_window' id='aoc.cursos_finestra'>
+          <field name="name">aoc.cursos_finestra</field>
+          <field name="res_model">aoc.cursos</field>
+          <field name="view_mode">tree,form</field>
+      </record>
+          <record model='ir.actions.act_window' id='aoc.sesions_finestra'>
+          <field name="name">aoc.sesions_finestra</field>
+          <field name="res_model">aoc.sesions</field>
+          <field name="view_mode">tree,form,calendar</field>
+        </record>
+      <record model="ir.ui.view" id="buscadorcursos">
+          <field name="name">buscadorcursos</field>
+          <field name="model">aoc.cursos</field>
+          <field name="arch" type="xml">
+              <search>
+                <field name="nom" string="Nom"/>
+                <field name="descripcio" string="Descripció"/>
+              </search>
+            </field>
+      </record> 
+      <record model="ir.ui.view" id="buscadorsesions">
+          <field name="name">buscadorsesions</field>
+          <field name="model">aoc.sesions</field>
+          <field name="arch" type="xml">
+              <search>
+                  <filter name="instructor" domain="[]" context="{'group_by':'instructor'}"/>
+              </search>
+            </field>
+      </record>
+      <record model="ir.actions.act_window" id='contactaction'>
+        <field name="name">Contactes</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">form</field>
+      </record>  
+      <menuitem name="AOC" id="aoc.menu"/>
+      <menuitem name="Cursos" id="menucursos" parent="aoc.menu" action="aoc.cursos_finestra"/>
+      <menuitem name="Sesions" id="menusesions" parent="aoc.menu" action="aoc.sesions_finestra"/>
+      <menuitem name="Configuracio" id="menuconfig" parent="aoc.menu"/>
+      <menuitem name="Contacts" id='menucontact' parent="menuconfig" action="contactaction"/> 
+         
+                
+
+
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="aoc.list">
+      <field name="name">AOC list</field>
+      <field name="model">aoc.aoc</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="aoc.action_window">
+      <field name="name">AOC window</field>
+      <field name="res_model">aoc.aoc</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="aoc.action_server">
+      <field name="name">AOC server</field>
+      <field name="model_id" ref="model_aoc_aoc"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="AOC" id="aoc.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="aoc.menu_1" parent="aoc.menu_root"/>
+    <menuitem name="Menu 2" id="aoc.menu_2" parent="aoc.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="aoc.menu_1_list" parent="aoc.menu_1"
+              action="aoc.action_window"/>
+    <menuitem name="Server to list" id="aoc" parent="aoc.menu_2"
+              action="aoc.action_server"/>
+-->
+  </data>
+</odoo>

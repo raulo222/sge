@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <record id="aoc_manager" model="res.groups">
+            <field name="name">AOC/Manager</field>
+        </record>
+        <record id="aoc_user" model="res.groups">
+            <field name="name">AOC / User</field>
+        </record>
+    </data>
+
+    
+
+</odoo>

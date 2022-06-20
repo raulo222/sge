@@ -1,0 +1,31 @@
+<odoo>
+
+    
+    <report
+        id="report_session"
+        model="aoc.sesions"
+        string="Session Report"
+        name="aoc.report_session_view"
+        file="openacademy.report_session"
+        report_type="qweb-pdf" />
+
+    <template id="report_session_view">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 t-field="doc.nom"/>
+                        <p>Desde <span t-field="doc.fecha"/> to <span t-field="doc.fechaf"/></p>
+                        <h3>Asistents:</h3>
+                        <ul>
+                            <t t-foreach="doc.assistents" t-as="asistents">
+                                <li><span t-field="asistents.name"/></li>
+                            </t>
+                        </ul>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
